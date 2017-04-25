@@ -1,0 +1,21 @@
+name: ccr
+version: 0.1.0
+
+authors:
+  - z64 <zachnowicki@gmail.com>
+
+targets:
+  ccr:
+    main: src/ccr.cr
+
+crystal: 0.21.1
+
+license: MIT
+
+dependencies:
+  discordcr:
+    github: meew0/discordcr
+    branch: master
+  osu:
+    github: z64/osu
+    branch: master
