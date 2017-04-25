@@ -13,8 +13,8 @@ crystal: 0.21.1
 license: MIT
 
 dependencies:
-  discordcr:
-    github: meew0/discordcr
+  ctx:
+    github: z64/ctx
     branch: master
   osu:
     github: z64/osu
