@@ -4,7 +4,8 @@ module Ccr
   end
 
   # Base command is the same as ccr.standard
-  BOT.command("ccr ") do |payload, args|
+  BOT.command("ccr") do |payload, args|
+    args = payload.author.username if args.empty?
     user = OSU.user args
     user_not_found
 
@@ -14,6 +15,7 @@ module Ccr
   # Creates commands for each game mode stat pull
   {% for mode in ["standard", "taiko", "ctb", "mania"] %}
     BOT.command("ccr.{{mode.id}}") do |payload, args|
+      args = payload.author.username if args.empty?
       user = OSU.user args, Osu::Mode::{{mode.capitalize.id}}
       user_not_found
 
@@ -22,6 +24,7 @@ module Ccr
   {% end %}
 
   BOT.command("ccr.ranks") do |payload, args|
+    args = payload.author.username if args.empty?
     stats = OSU.user args, [Osu::Mode::Standard, Osu::Mode::Taiko, Osu::Mode::Ctb, Osu::Mode::Mania]
     next BOT.create_message(payload.channel_id, "`user not found`") unless stats.all.values.any?
 
