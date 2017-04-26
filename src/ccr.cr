@@ -1,5 +1,16 @@
+require "ctx"
+require "osu/client"
 require "./ccr/*"
 
 module Ccr
-  # TODO Put your code here
+  CONFIG = Config.from_file("config.yml")
+
+  BOT = Ctx::Bot.new(
+    CONFIG.token,
+    CONFIG.client_id
+  )
+
+  OSU = Osu::Client.new CONFIG.osu_token
+
+  BOT.run
 end
