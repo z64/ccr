@@ -3,9 +3,15 @@ module Ccr
     next BOT.create_message(payload.channel_id, "`user not found`") unless user
   end
 
+  default_command = Ctx::Context.message_create { |m| (m.content =~ /ccr\s?/) == 0 }
+
   # Base command is the same as ccr.standard
-  BOT.command("ccr") do |payload, args|
-    args = payload.author.username if args.empty?
+  BOT.message_create(default_command) do |payload|
+    args = if payload.content == "ccr"
+             payload.author.username
+           else
+             payload.content[4..-1]
+           end
     user = OSU.user args
     user_not_found
 
