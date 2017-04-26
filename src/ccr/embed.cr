@@ -14,15 +14,15 @@ module Osu
       stats_field = Discord::EmbedField.new( 
         name: "Stats",
         value: <<-DATA
-        **PP Rank:** #{rank.pp} (`#{pp_raw}`) / **Country (#{country}):** #{rank.country}
+        **PP Rank:** #{rank.pp.try &.to_cspv} (`#{pp_raw}`) / **Country (#{country}):** #{rank.country.try &.to_cspv}
         **SS** `x#{rank.ss}` / **S** `x#{rank.s}` / **A** `x#{rank.a}`
 
         **Accuracy:** `#{accuracy.try &.round(2)}%`
-        300 `x#{count300}` / 100 `x#{count100}` / 50 `x#{count50}`
+        300 `x#{count300.try &.to_cspv}` / 100 `x#{count100.try &.to_cspv}` / 50 `x#{count50.try &.to_cspv}`
 
         **Level #{level}**
-        **Total Score:** #{total_score} / **Ranked:** `#{ranked_score}`
-        **Playcount:** `x#{playcount}`
+        **Total Score:** `#{total_score.try &.to_cspv}` / **Ranked:** `#{ranked_score.try &.to_cspv}`
+        **Playcount:** `x#{playcount.try &.to_cspv}`
         DATA
       )
       

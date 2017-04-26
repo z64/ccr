@@ -27,7 +27,7 @@ module Ccr
 
     string = String.build do |str|
       Osu::Mode.each do |flag, v|
-        str << "**#{flag.to_s.downcase}:** #{stats[flag].try &.rank.pp} (`#{stats[flag].try &.pp_raw}`)\n"
+        str << "**#{flag.to_s.downcase}:** #{stats[flag].try &.rank.pp.try &.to_cspv} (`#{stats[flag].try &.pp_raw.try &.to_cspv}`)\n"
       end
     end
 
