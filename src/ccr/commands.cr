@@ -23,15 +23,15 @@ module Ccr
 
   BOT.command("ccr.ranks") do |payload, args|
     stats = OSU.user args, [Osu::Mode::Standard, Osu::Mode::Taiko, Osu::Mode::Ctb, Osu::Mode::Mania]
-    next BOT.create_message(payload.channel_id, "`user not found`") unless stats.any?
+    next BOT.create_message(payload.channel_id, "`user not found`") unless stats.all.values.any?
 
     string = String.build do |str|
       Osu::Mode.each do |flag, v|
-        str << "**#{flag.to_s.downcase}:** #{stats[v].try &.rank.pp} (#{stats[v].try &.pp_raw})\n"
+        str << "**#{flag.to_s.downcase}:** #{stats[flag].try &.rank.pp} (`#{stats[flag].try &.pp_raw}`)\n"
       end
     end
 
-    user = stats.first.as(Osu::User)
+    user = stats.standard.as(Osu::User)
 
     BOT.create_message(
       payload.channel_id, 
