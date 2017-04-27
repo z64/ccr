@@ -40,7 +40,10 @@ module Osu
         url: url,
         timestamp: Time.now,
         colour: OSU_COLOR,
-        description: "Mapped by: **#{creator}** `[#{mode} | #{approval}]`"
+        description: <<-data
+        Mapped by: **#{creator}** `[#{mode} | #{approval}]`
+        Last Update: `#{last_update}`
+        data
       )
 
       total_length_str = Time.new(total_length.as(UInt32)).to_s "%M:%S"
