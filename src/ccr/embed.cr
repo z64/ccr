@@ -5,9 +5,9 @@ module Osu
   struct User
     def embed
       e = Discord::Embed.new(
-        author: Discord::EmbedAuthor.new(icon_url: OSU_ICON),
-        title: "View Profile",
+        author: Discord::EmbedAuthor.new(name: "View Profile", icon_url: OSU_ICON),
         url: profile_url,
+        timestamp: Time.now,
         colour: OSU_COLOR
       )
 
@@ -28,7 +28,6 @@ module Osu
 
       e.fields = [stats_field]
       e.thumbnail = Discord::EmbedThumbnail.new(avatar_url)
-      e.timestamp = Time.now
 
       e
     end
