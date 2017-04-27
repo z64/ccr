@@ -20,4 +20,15 @@ module Ccr
 
     BOT.create_message(payload.channel_id, "**#{user.username}** [`standard`]", user.embed)
   end
+
+  # Beatmap link
+  BOT.message_create(Links::BEATMAP_CTX) do |payload|
+    beatmap_id = payload.content[Links::BEATMAP]?.as(String)[/\d+/].to_i32
+
+    beatmap = OSU.beatmap beatmap_id
+    next unless beatmap
+    beatmap = beatmap.as(Osu::Beatmap)
+
+    BOT.create_message(payload.channel_id, "**#{beatmap.artist} - #{beatmap.title}** (#{beatmap.version})", beatmap.embed)
+  end
 end
