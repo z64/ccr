@@ -46,8 +46,8 @@ module Osu
         data
       )
 
-      total_length_str = Time.new(total_length.as(UInt32)).to_s "%M:%S"
-      hit_length_str = Time.new(hit_length.as(UInt32)).to_s "%M:%S"
+      total_length_str = Time.parse(total_length.as(UInt32).to_s, "%s").to_s "%M:%S"
+      hit_length_str = Time.parse(hit_length.as(UInt32).to_s, "%s").to_s "%M:%S"
 
       e.fields = [
         Discord::EmbedField.new(
@@ -65,11 +65,36 @@ module Osu
           name: "Stats",
           inline: true,
           value: <<-data
-          Length: `#{total_length}` (`#{hit_length}` drain) @ #{bpm} BPM
+          Length: `#{total_length_str}` (`#{hit_length_str}` drain) @ #{bpm} BPM
           Max Combo: **#{max_combo}**
           Pass Count: **#{passcount.as(UInt32).to_cspv} / #{playcount.as(UInt32).to_cspv}** (#{(passcount.as(UInt32).to_f / playcount.as(UInt32).to_f).round(2)}%)
           Favorited by **#{favourite_count.as(UInt32).to_cspv}** players
           data
+        ),
+      ]
+
+      e
+    end
+  end
+
+  struct BeatmapSet
+    def embed
+      e = Discord::Embed.new(
+        author: Discord::EmbedAuthor.new(name: "View Beatmap Set", icon_url: OSU_ICON),
+        url: url,
+        timestamp: Time.now,
+        colour: OSU_COLOR,
+      )
+
+      map_strings = beatmaps.map do |m|
+        length = Time.parse(m.total_length.as(UInt32).to_s, "%s").to_s "%M:%S"
+        "▫️[#{m.version}](#{m.url}) (#{m.mode}, diff: **#{m.difficulty.overall}** / combo: **#{m.max_combo}** / `#{length}`)"
+      end
+
+      e.fields = [
+        Discord::EmbedField.new(
+          name: "Maps in this set",
+          value: map_strings.join("\n")
         ),
       ]
 
