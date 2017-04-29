@@ -31,4 +31,20 @@ module Ccr
 
     BOT.create_message(payload.channel_id, "**#{beatmap.artist} - #{beatmap.title}** (#{beatmap.version})", beatmap.embed)
   end
+
+  # Beatmapset link
+  BOT.message_create(Links::BEATMAP_SET_CTX) do |payload|
+    set_id = payload.content[Links::BEATMAP_SET]?.as(String)[/\d+/].to_i32
+
+    beatmap_set = OSU.beatmap_set set_id
+    next unless beatmap_set
+    beatmap_set = beatmap_set.as(Osu::BeatmapSet)
+
+    if beatmap_set.beatmaps.size == 1
+      beatmap = beatmap_set.beatmaps.first
+      BOT.create_message(payload.channel_id, "**#{beatmap.artist} - #{beatmap.title}** (#{beatmap.version})", beatmap.embed)
+    else
+      BOT.create_message(payload.channel_id, "**#{beatmap_set.artist} - #{beatmap_set.title}**", beatmap_set.embed)
+    end
+  end
 end
