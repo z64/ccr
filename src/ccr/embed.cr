@@ -56,7 +56,7 @@ module Osu
           inline: true,
           value: <<-data
           Overall: **#{difficulty.overall}**
-          Star Difficulty: **#{difficulty.rating.as(Float64).round(2)}**
+          Star Difficulty: **#{difficulty.rating.as(Float32).round(2)}**
           Circle Size: **#{difficulty.size}**
           HP Drain: **#{difficulty.drain}**
           Approach Rate: **#{difficulty.approach}**
