@@ -43,6 +43,7 @@ module Osu
         description: <<-data
         Mapped by: **#{creator}** `[#{mode} | #{approval}]`
         Last Update: `#{last_update}`
+        #{beatmapset_id.nil? ? "" : "[View Beatmap Set](#{beatmap_set_url})"}
         data
       )
 
