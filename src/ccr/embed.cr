@@ -92,12 +92,11 @@ module Osu
         "▫️[#{m.version}](#{m.url}) (#{m.mode}, diff: **#{m.difficulty.overall}** / combo: **#{m.max_combo}** / `#{length}`)"
       end
 
-      e.fields = [
-        Discord::EmbedField.new(
-          name: "Maps in this set",
-          value: map_strings.join("\n")
-        ),
-      ]
+      e.description = <<-DATA
+      **Maps in this set**
+
+      #{map_strings.join("\n")}
+      DATA
 
       e
     end
