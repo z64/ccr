@@ -89,12 +89,11 @@ module Osu
 
       map_strings = beatmaps.map do |m|
         length = Time.parse(m.total_length.as(UInt32).to_s, "%s").to_s "%M:%S"
-        "▫️[#{m.version}](#{m.url}) (#{m.mode}, diff: **#{m.difficulty.overall}** / combo: **#{m.max_combo}** / `#{length}`)"
+        "▫️[#{m.version}](#{m.url}) (diff: **#{m.difficulty.overall}** / combo: **#{m.max_combo}** / `#{length}`)"
       end
 
       e.description = <<-DATA
       **Maps in this set**
-
       #{map_strings.join("\n")}
       DATA
 
