@@ -19,3 +19,5 @@ dependencies:
   osu:
     github: z64/osu
     branch: master
+  redisoid:
+    github: kostya/redisoid
